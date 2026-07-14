@@ -1,9 +1,24 @@
 {% extends "core/base.html" %}
-
+<!-- apenas preencher os buracos -->
 {% block title %}Demandas abertas{% endblock %}
 
 {% block content %}
-  <h1>Demandas abertas</h1>
-  <p>Em breve, a lista de demandas.</p>
+  <h1 class="mb-4">Demandas abertas</h1>
+
+  <div class="row">
+    {% for demanda in demandas %}
+      <div class="col-md-4 mb-3">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">{{ demanda.titulo }}</h5>
+            <p class="card-text">
+              <span class="badge bg-secondary">{{ demanda.categoria }}</span>
+            </p>
+            <p class="text-muted small">{{ demanda.cidade }}</p>
+            <a href="#" class="btn btn-primary btn-sm">Ver detalhes</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}
-<!-- apenas preencheu os buracos -->
