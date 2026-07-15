@@ -7,7 +7,8 @@ def home(request):
         {"titulo": "Pintar quarto pequeno", "categoria": "Pintura", "cidade": "São José"},
         {"titulo": "Consertar vazamento na pia", "categoria": "Hidráulica", "cidade": "Palhoça"},
     ]
-    return render(request, "core/index.html", {"demandas": demandas})
+    return render(request, "core/index.html", {"demandas": demandas}) 
+    # passa dados pro template via dict
 
 def sobre(request):
     return HttpResponse("Página sobre o projeto.")

@@ -5,20 +5,24 @@
 {% block content %}
   <h1 class="mb-4">Demandas abertas</h1>
 
-  <div class="row">
-    {% for demanda in demandas %}
-      <div class="col-md-4 mb-3">
-        <div class="card h-100">
-          <div class="card-body">
-            <h5 class="card-title">{{ demanda.titulo }}</h5>
-            <p class="card-text">
-              <span class="badge bg-secondary">{{ demanda.categoria }}</span>
-            </p>
-            <p class="text-muted small">{{ demanda.cidade }}</p>
-            <a href="#" class="btn btn-primary btn-sm">Ver detalhes</a>
+  {% if demandas %}
+    <div class="row">
+      {% for demanda in demandas %}
+        <div class="col-md-4 mb-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">{{ demanda.titulo }}</h5>
+              <p class="card-text">
+                <span class="badge bg-secondary">{{ demanda.categoria }}</span>
+              </p>
+              <p class="text-muted small">{{ demanda.cidade }}</p>
+              <a href="#" class="btn btn-primary btn-sm">Ver detalhes</a>
+            </div>
           </div>
         </div>
-      </div>
-    {% endfor %}
-  </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-muted">Nenhuma demanda aberta no momento.</p>
+  {% endif %}
 {% endblock %}
