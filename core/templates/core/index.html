@@ -13,10 +13,10 @@
             <div class="card-body">
               <h5 class="card-title">{{ demanda.titulo }}</h5>
               <p class="card-text">
-                <span class="badge bg-secondary">{{ demanda.categoria }}</span>
+                <span class="badge bg-secondary">{{ demanda.get_categoria_display }}</span>
               </p>
               <p class="text-muted small">{{ demanda.cidade }}</p>
-              <a href="#" class="btn btn-primary btn-sm">Ver detalhes</a>
+              <a href="{% url 'detalhe_demanda' demanda.pk %}" class="btn btn-primary btn-sm">Ver detalhes</a>
             </div>
           </div>
         </div>

@@ -3,5 +3,6 @@ from . import views
 
 urlpatterns = [
     path("", views.home, name="home"), # "": endereço, views.home é a funct que responde,
-    path("sobre/", views.sobre, name="sobre"), #  name é o apelido pra essa rota
+    #  name é o apelido pra essa rota
+    path("demanda/<int:pk>/", views.detalhe_demanda, name="detalhe_demanda"),
 ]

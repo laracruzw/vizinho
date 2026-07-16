@@ -1,14 +1,11 @@
-from django.http import HttpResponse
-from django.shortcuts import render
-# Create your views here.
-def home(request):
-    demandas = [
-        {"titulo": "Trocar tomada queimada", "categoria": "Elétrica", "cidade": "Florianópolis"},
-        {"titulo": "Pintar quarto pequeno", "categoria": "Pintura", "cidade": "São José"},
-        {"titulo": "Consertar vazamento na pia", "categoria": "Hidráulica", "cidade": "Palhoça"},
-    ]
-    return render(request, "core/index.html", {"demandas": demandas}) 
-    # passa dados pro template via dict
+from django.shortcuts import get_object_or_404, render
+from .models import Demanda
 
-def sobre(request):
-    return HttpResponse("Página sobre o projeto.")
+
+def home(request):
+    demandas = Demanda.objects.filter(status="ABERTA").order_by("-criada_em")
+    return render(request, "core/index.html", {"demandas": demandas})
+
+def detalhe_demanda(request, pk): # pk é o id da demanda
+    demanda = get_object_or_404(Demanda, pk=pk)
+    return render(request, "core/detalhe.html", {"demanda": demanda})
