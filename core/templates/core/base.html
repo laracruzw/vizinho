@@ -20,8 +20,14 @@
         <a class="btn btn-light btn-sm" href="#">Cadastrar</a>
       </div>
     </div>
+    <a class="btn btn-success btn-sm" href="{% url 'criar_demanda' %}">Publicar demanda</a>
+    
   </nav>
-
+  <div class="container mt-3">
+    {% for message in messages %}
+      <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+  </div>
   <main class="container py-4">
     {% block content %}{% endblock %} <!-- o que as pags filhas preenchem -->
   </main>
