@@ -29,3 +29,5 @@ class Demanda(models.Model):
 
     def __str__(self):
         return self.titulo # retorna o título da demanda quando o objeto é convertido para string
+    
+

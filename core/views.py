@@ -9,3 +9,6 @@ def home(request):
 def detalhe_demanda(request, pk): # pk é o id da demanda
     demanda = get_object_or_404(Demanda, pk=pk)
     return render(request, "core/detalhe.html", {"demanda": demanda})
+
+def sobre(request):
+    return render(request, "core/sobre.html")
