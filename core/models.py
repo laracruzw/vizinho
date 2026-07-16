@@ -16,9 +16,9 @@ class Demanda(models.Model):
         CONCLUIDA = "CONCLUIDA", "Concluída"
 
     cliente = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        on_delete=models.CASCADE,
-        related_name="demandas",
+        settings.AUTH_USER_MODEL, # indica que a demanda pertence a um cliente
+        on_delete=models.CASCADE, # on delete indica se a demanda deve ser deletada caso o cliente seja deletado
+        related_name="demandas", # related_name indica o nome do atributo que será usado para acessar as demandas do cliente
     )
     titulo = models.CharField(max_length=120)
     descricao = models.TextField()
@@ -28,4 +28,4 @@ class Demanda(models.Model):
     criada_em = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.titulo
+        return self.titulo # retorna o título da demanda quando o objeto é convertido para string
