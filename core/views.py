@@ -24,6 +24,30 @@ def detalhe_demanda(request, pk): # pk é o id da demanda
     demanda = get_object_or_404(Demanda, pk=pk)
     return render(request, "core/detalhe.html", {"demanda": demanda})
 
+def editar_demanda(request, pk):
+    demanda = get_object_or_404(Demanda, pk=pk)
+
+    if request.method == "POST":
+        form = DemandaForm(request.POST, instance=demanda)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Demanda atualizada com sucesso!")
+            return redirect("detalhe_demanda", pk=demanda.pk)
+    else:
+        form = DemandaForm(instance=demanda)
+
+    return render(request, "core/criar_demanda.html", {"form": form})
+
+def excluir_demanda(request, pk):
+    demanda = get_object_or_404(Demanda, pk=pk)
+
+    if request.method == "POST":
+        demanda.delete()
+        messages.success(request, "Demanda excluída com sucesso!")
+        return redirect("home")
+
+    return render(request, "core/excluir_demanda.html", {"demanda": demanda})
+
 def sobre(request):
     return render(request, "core/sobre.html")
 

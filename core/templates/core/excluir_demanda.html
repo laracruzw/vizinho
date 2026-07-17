@@ -1,0 +1,16 @@
+{% extends "core/base.html" %}
+
+{% block title %}Excluir demanda{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">Excluir demanda</h1>
+
+  <p>Tem certeza que deseja excluir a demanda <strong>"{{ demanda.titulo }}"</strong>?</p>
+  <p class="text-muted">Esta ação não pode ser desfeita.</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Sim, excluir</button>
+    <a href="{% url 'detalhe_demanda' demanda.pk %}" class="btn btn-secondary">Cancelar</a>
+  </form>
+{% endblock %}
