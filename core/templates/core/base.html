@@ -16,11 +16,19 @@
     <div class="container">
       <a class="navbar-brand" href="/">Vizinho de Aluguel</a>
       <div>
-        <a class="btn btn-outline-light btn-sm" href="#">Entrar</a>
-        <a class="btn btn-light btn-sm" href="#">Cadastrar</a>
+        {% if user.is_authenticated %}
+         <span class="navbar-text text-light me-3">Olá, {{ user.username }}</span>
+         <a class="btn btn-success btn-sm" href="{% url 'criar_demanda' %}">Publicar demanda</a>
+         <form method="post" action="{% url 'logout' %}" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-light btn-sm">Sair</button>
+          </form>
+        {% else %}
+          <a class="btn btn-outline-light btn-sm" href="{% url 'login' %}">Entrar</a>
+          <a class="btn btn-light btn-sm" href="{% url 'cadastro' %}">Cadastrar</a>
+        {% endif %}
       </div>
     </div>
-    <a class="btn btn-success btn-sm" href="{% url 'criar_demanda' %}">Publicar demanda</a>
     
   </nav>
   <div class="container mt-3">
