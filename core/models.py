@@ -30,4 +30,29 @@ class Demanda(models.Model):
     def __str__(self):
         return self.titulo # retorna o título da demanda quando o objeto é convertido para string
     
+class Orcamento(models.Model):
+    demanda = models.ForeignKey(
+        Demanda,
+        on_delete=models.CASCADE,
+        related_name="orcamentos",
+    )
+    mei = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="orcamentos_enviados",
+    )
+    valor = models.DecimalField(max_digits=9, decimal_places=2)
+    mensagem = models.TextField()
+    aceito = models.BooleanField(default=False)
+    criado_em = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["demanda", "mei"],
+                name="um_orcamento_por_mei_por_demanda",
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.mei.username} - R$ {self.valor}"
