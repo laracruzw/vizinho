@@ -1,0 +1,29 @@
+{% extends "core/base.html" %}
+
+{% block title %}Minhas demandas{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">Minhas demandas</h1>
+
+  {% if demandas %}
+    <div class="row">
+      {% for demanda in demandas %}
+        <div class="col-md-4 mb-3">
+          <div class="card h-100">
+            <div class="card-body">
+              <h5 class="card-title">{{ demanda.titulo }}</h5>
+              <p>
+                <span class="badge bg-secondary">{{ demanda.get_categoria_display }}</span>
+                <span class="badge bg-info">{{ demanda.get_status_display }}</span>
+              </p>
+              <a href="{% url 'detalhe_demanda' demanda.pk %}" class="btn btn-primary btn-sm">Ver detalhes</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-muted">Você ainda não publicou nenhuma demanda.</p>
+    <a href="{% url 'criar_demanda' %}" class="btn btn-success">Publicar minha primeira demanda</a>
+  {% endif %}
+{% endblock %}

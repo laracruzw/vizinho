@@ -5,6 +5,26 @@
 {% block content %}
   <h1 class="mb-4">Demandas abertas</h1>
 
+  <form method="get" class="row g-2 mb-4">
+    <div class="col-md-4">
+      <select name="categoria" class="form-select">
+        <option value="">Todas as categorias</option>
+        {% for valor, rotulo in categorias %}
+          <option value="{{ valor }}" {% if request.GET.categoria == valor %}selected{% endif %}>{{ rotulo }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <input type="text" name="cidade" class="form-control" placeholder="Cidade" value="{{ request.GET.cidade|default:'' }}">
+    </div>
+
+    <div class="col-md-4">
+      <button type="submit" class="btn btn-primary">Filtrar</button>
+      <a href="{% url 'home' %}" class="btn btn-outline-secondary">Limpar</a>
+    </div>
+  </form>
+  
   {% if demandas %}
     <div class="row">
       {% for demanda in demandas %}

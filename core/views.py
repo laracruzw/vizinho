@@ -6,8 +6,23 @@ from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
 
 def home(request):
-    demandas = Demanda.objects.filter(status="ABERTA").order_by("-criada_em")
-    return render(request, "core/index.html", {"demandas": demandas})
+    demandas = Demanda.objects.filter(status="ABERTA")
+    
+    categoria = request.GET.get("categoria")
+    cidade = request.GET.get("cidade")
+
+    if categoria:
+        demandas = demandas.filter(categoria=categoria)
+
+    if cidade:
+        demandas = demandas.filter(cidade__icontains=cidade)
+
+    demandas = demandas.order_by("-criada_em")
+
+    return render(request, "core/index.html", {
+        "demandas": demandas,
+        "categorias": Demanda.Categoria.choices,
+    })
 
 @login_required
 def criar_demanda(request):
@@ -61,3 +76,9 @@ def excluir_demanda(request, pk):
 def sobre(request):
     return render(request, "core/sobre.html")
 
+@login_required
+def minhas_demandas(request):
+    if request.user.tipo != "CLIENTE":
+        raise PermissionDenied
+    demandas = Demanda.objects.filter(cliente=request.user).order_by("-criada_em")
+    return render(request, "core/minhas_demandas.html", {"demandas": demandas})

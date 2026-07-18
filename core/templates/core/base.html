@@ -20,6 +20,7 @@
           <span class="navbar-text text-light me-3">Olá, {{ user.username }}</span>
         {% if user.tipo == "CLIENTE" %}
           <a class="btn btn-success btn-sm" href="{% url 'criar_demanda' %}">Publicar demanda</a>
+          <a class="btn btn-outline-light btn-sm" href="{% url 'minhas_demandas' %}">Minhas demandas</a>
         {% endif %}
         <form method="post" action="{% url 'logout' %}" class="d-inline">
             {% csrf_token %}
