@@ -1,0 +1,34 @@
+{% extends "core/base.html" %}
+
+{% block title %}Meus orçamentos{% endblock %}
+
+{% block content %}
+  <h1 class="mb-4">Meus orçamentos</h1>
+
+  {% if orcamentos %}
+    <div class="list-group">
+      {% for orcamento in orcamentos %}
+        <a href="{% url 'detalhe_demanda' orcamento.demanda.pk %}" class="list-group-item list-group-item-action">
+          <div class="d-flex justify-content-between">
+            <div>
+              <strong>{{ orcamento.demanda.titulo }}</strong>
+              <p class="mb-0 text-muted small">Seu orçamento: R$ {{ orcamento.valor }}</p>
+            </div>
+            <div>
+              {% if orcamento.aceito %}
+                <span class="badge bg-success">Aceito</span>
+              {% elif orcamento.demanda.status == "FECHADA" %}
+                <span class="badge bg-secondary">Não selecionado</span>
+              {% else %}
+                <span class="badge bg-warning text-dark">Aguardando</span>
+              {% endif %}
+            </div>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p class="text-muted">Você ainda não enviou nenhum orçamento.</p>
+    <a href="{% url 'home' %}" class="btn btn-primary">Ver demandas abertas</a>
+  {% endif %}
+{% endblock %}

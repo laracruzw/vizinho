@@ -138,3 +138,11 @@ def aceitar_orcamento(request, pk):
         messages.success(request, f"Orçamento de {orcamento.mei.username} aceito!")
 
     return redirect("detalhe_demanda", pk=demanda.pk)
+
+@login_required
+def meus_orcamentos(request):
+    if request.user.tipo != "MEI":
+        raise PermissionDenied
+
+    orcamentos = request.user.orcamentos_enviados.select_related("demanda").order_by("-criado_em")
+    return render(request, "core/meus_orcamentos.html", {"orcamentos": orcamentos})
