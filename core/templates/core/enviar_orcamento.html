@@ -6,9 +6,20 @@
   <h1 class="mb-4">Enviar orçamento</h1>
   <p class="text-muted">Demanda: <strong>{{ demanda.titulo }}</strong></p>
 
-  <form method="post">
+  <form method="post" novalidate>
     {% csrf_token %}
-    {{ form.as_p }}
+    {% for field in form %}
+      <div class="mb-3">
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.errors %}
+          <div class="alert alert-danger py-1 mt-1">{{ field.errors }}</div>
+        {% endif %}
+        {% if field.help_text %}
+          <small class="text-muted">{{ field.help_text }}</small>
+        {% endif %}
+      </div>
+    {% endfor %}
     <button type="submit" class="btn btn-primary">Enviar orçamento</button>
     <a href="{% url 'detalhe_demanda' demanda.pk %}" class="btn btn-secondary">Cancelar</a>
   </form>

@@ -5,7 +5,7 @@
 {% block content %}
   <h1 class="mb-4">Criar conta</h1>
 
-  <form method="post">
+  <form method="post" novalidate>
     {% csrf_token %}
     {% for field in form %}
       <div class="mb-3">

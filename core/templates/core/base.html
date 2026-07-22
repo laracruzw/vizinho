@@ -21,7 +21,9 @@
         {% if user.is_authenticated %}
           <span class="navbar-text text-light me-3">Olá, {{ user.username }}</span>
         {% if user.tipo == "CLIENTE" %}
-          <a class="btn btn-success btn-sm" href="{% url 'criar_demanda' %}">Publicar demanda</a>
+          {% if request.resolver_match.url_name != "criar_demanda" %}
+            <a class="btn btn-success btn-sm" href="{% url 'criar_demanda' %}">Publicar demanda</a>
+          {% endif %}
           <a class="btn btn-outline-light btn-sm" href="{% url 'minhas_demandas' %}">Minhas demandas</a>
         {% endif %}
         {% if user.tipo == "MEI" %}
