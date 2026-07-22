@@ -4,6 +4,7 @@ from .forms import DemandaForm, OrcamentoForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+from django.http import JsonResponse
 
 def home(request):
     demandas = Demanda.objects.filter(status="ABERTA")
@@ -146,3 +147,28 @@ def meus_orcamentos(request):
 
     orcamentos = request.user.orcamentos_enviados.select_related("demanda").order_by("-criado_em")
     return render(request, "core/meus_orcamentos.html", {"orcamentos": orcamentos})
+
+@login_required
+def aceitar_orcamento_ajax(request, pk):
+    if request.method != "POST":
+        return JsonResponse({"erro": "Método não permitido"}, status=405)
+
+    orcamento = get_object_or_404(Orcamento, pk=pk)
+    demanda = orcamento.demanda
+
+    if demanda.cliente != request.user:
+        return JsonResponse({"erro": "Sem permissão"}, status=403)
+
+    if demanda.status != "ABERTA":
+        return JsonResponse({"erro": "Demanda já fechada"}, status=400)
+
+    orcamento.aceito = True
+    orcamento.save()
+    demanda.status = "FECHADA"
+    demanda.save()
+
+    return JsonResponse({
+        "ok": True,
+        "mei": orcamento.mei.username,
+        "valor": str(orcamento.valor),
+    })
