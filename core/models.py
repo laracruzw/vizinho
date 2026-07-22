@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.db import models
-
+from decimal import Decimal
+from django.core.validators import MinValueValidator
 
 class Demanda(models.Model):
     class Categoria(models.TextChoices):
@@ -41,7 +42,7 @@ class Orcamento(models.Model):
         on_delete=models.CASCADE,
         related_name="orcamentos_enviados",
     )
-    valor = models.DecimalField(max_digits=9, decimal_places=2)
+    valor = valor = models.DecimalField(max_digits=9, decimal_places=2, validators=[MinValueValidator(Decimal("0.01"))])
     mensagem = models.TextField()
     aceito = models.BooleanField(default=False)
     criado_em = models.DateTimeField(auto_now_add=True)
